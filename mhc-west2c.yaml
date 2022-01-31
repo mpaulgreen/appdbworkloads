@@ -1,0 +1,20 @@
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineHealthCheck
+metadata:
+  name: west2c
+  namespace: openshift-machine-api
+spec:
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: mpnodes-zx4x4
+      machine.openshift.io/cluster-api-machine-role: worker
+      machine.openshift.io/cluster-api-machine-type: worker 
+      machine.openshift.io/cluster-api-machineset: mpnodes-zx4x4-worker-us-west-2c
+  unhealthyConditions:
+  - type:    "Ready"
+    timeout: "60s" 
+    status: "False"
+  - type:    "Ready"
+    timeout: "60s" 
+    status: "Unknown"
