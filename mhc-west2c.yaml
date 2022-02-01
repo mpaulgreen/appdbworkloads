@@ -7,10 +7,10 @@ metadata:
 spec:
   selector:
     matchLabels:
-      machine.openshift.io/cluster-api-cluster: mpnodes-zx4x4
+      machine.openshift.io/cluster-api-cluster: mpnodes-46nmh
       machine.openshift.io/cluster-api-machine-role: worker
       machine.openshift.io/cluster-api-machine-type: worker 
-      machine.openshift.io/cluster-api-machineset: mpnodes-zx4x4-worker-us-west-2c
+      machine.openshift.io/cluster-api-machineset: mpnodes-46nmh-worker-us-west-2c
   unhealthyConditions:
   - type:    "Ready"
     timeout: "60s" 

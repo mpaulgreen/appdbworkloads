@@ -1,0 +1,21 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineHealthCheck
+metadata:
+  name: posion-pill-machine-health-check
+  namespace: openshift-machine-api
+spec:
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-machine-role: "worker"
+      machine.openshift.io/cluster-api-machine-type: "worker"
+  unhealthyConditions:
+  - type:    "Ready"
+    timeout: "60s"
+    status: "False"
+  - type:    "Ready"
+    timeout: "60s"
+    status: "Unknown"
+  remediationTemplate: 
+    kind: PoisonPillRemediationTemplate
+    apiVersion: poison-pill.medik8s.io/v1alpha1
+    name: poisonpillremediationtemplate-sample
