@@ -1,0 +1,8 @@
+apiVersion: poison-pill.medik8s.io/v1alpha1
+kind: PoisonPillConfig
+metadata:
+  name: poison-pill-config
+  namespace: openshift-operators
+spec:
+  safeTimeToAssumeNodeRebootedSeconds: 60 
+  watchdogFilePath: /test/watchdog1 

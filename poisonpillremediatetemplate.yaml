@@ -1,0 +1,8 @@
+apiVersion: poison-pill.medik8s.io/v1alpha1
+kind: PoisonPillRemediationTemplate
+metadata:
+  namespace: openshift-machine-api
+  name: poisonpillremediationtemplate-sample
+spec:
+  template:
+    spec: {}
