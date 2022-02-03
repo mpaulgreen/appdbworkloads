@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opsman-configmap
+  namespace: mongodb
+data:
+  baseUrl: http://ops-manager-pod-spec-svc.mongodb.svc.cluster.local:8080
+  orgId: 61fac40cf701804714fc4431

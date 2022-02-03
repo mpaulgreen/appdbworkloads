@@ -1,0 +1,115 @@
+---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: mongodb-benchmark-replica-set
+spec:
+  members: 3
+  version: 4.4.0-ent
+  type: ReplicaSet
+
+  # Before you create this object, you'll need to create a project ConfigMap and a
+  # credentials Secret. For instructions on how to do this, please refer to our
+  # documentation, here:
+  # https://docs.opsmanager.mongodb.com/current/tutorial/install-k8s-operator
+  opsManager:
+    configMapRef:
+      name: opsman-configmap
+  credentials: opsman-secret
+
+  persistent: true
+
+  podSpec:
+    # 'podTemplate' allows to set custom fields in PodTemplateSpec.
+    # (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#podtemplatespec-v1-core)
+    # for the Database StatefulSet.
+    podTemplate:
+      spec:
+        template:
+          metadata:
+            labels:
+              app: replicaset
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - replicaset
+              topologyKey: "kubernetes.io/hostname"
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - replicaset
+        containers:
+          - name: mongodb-enterprise-database
+            resources:
+              limits:
+                cpu: "1"
+                memory: 4000M
+              requests:
+                cpu: "1"
+                memory: 3500M---
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: mongodb-benchmark-replica-set
+spec:
+  members: 3
+  version: 4.4.0-ent
+  type: ReplicaSet
+
+  # Before you create this object, you'll need to create a project ConfigMap and a
+  # credentials Secret. For instructions on how to do this, please refer to our
+  # documentation, here:
+  # https://docs.opsmanager.mongodb.com/current/tutorial/install-k8s-operator
+  opsManager:
+    configMapRef:
+      name: opsman-configmap
+  credentials: opsman-secret
+
+  persistent: true
+
+  podSpec:
+    # 'podTemplate' allows to set custom fields in PodTemplateSpec.
+    # (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#podtemplatespec-v1-core)
+    # for the Database StatefulSet.
+    podTemplate:
+      spec:
+        template:
+          metadata:
+            labels:
+              app: replicaset
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - replicaset
+              topologyKey: "kubernetes.io/hostname"
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - replicaset
+        containers:
+          - name: mongodb-enterprise-database
+            resources:
+              limits:
+                cpu: "1"
+                memory: 4000M
+              requests:
+                cpu: "1"
+                memory: 3500M

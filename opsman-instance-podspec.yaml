@@ -1,0 +1,71 @@
+apiVersion: mongodb.com/v1
+kind: MongoDBOpsManager
+metadata:
+  name: ops-manager-pod-spec
+spec:
+  replicas: 3
+  version: 5.0.2
+  adminCredentials: opsman-admin-credentials
+  configuration:
+    mms.testUtil.enabled: "true"
+  backup:
+    enabled: true
+    statefulSet:
+      spec:
+        template:
+          spec:
+            affinity:
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: mynode
+                      operator: In
+                      values:
+                      - opsmanager
+              containers:
+              - name: mongodb-backup-daemon
+                resources:
+                  requests:
+                    cpu: '0.50'
+                    memory: 4500M
+
+  statefulSet:
+    spec:
+      template:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: mynode
+                    operator: In
+                    values:
+                    - opsmanager
+          containers:
+            - name: mongodb-ops-manager
+              resources:
+                limits:
+                  cpu: '0.70'
+                  memory: 6G
+  applicationDatabase:
+    members: 3
+    version: 4.4.4-ent
+    podSpec:
+      cpu: '0.25'
+      memory: 350M
+      persistence:
+        single:
+          storage: 1G
+      podTemplate:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: mynode
+                    operator: In
+                    values:
+                    - opsmanager

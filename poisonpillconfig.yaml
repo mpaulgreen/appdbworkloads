@@ -6,3 +6,4 @@ metadata:
 spec:
   safeTimeToAssumeNodeRebootedSeconds: 60 
   watchdogFilePath: /test/watchdog1 
+  peerUpdateInterval: 3m
